@@ -6,4 +6,14 @@ module.exports = {
             ],
         },
     },
+    devServer: (devServerConfig, { env, paths, proxy, allowedHost }) => {
+        return {
+            ...devServerConfig,
+            proxy: {
+                '/api/v1': {
+                    target: 'http://localhost:7002'
+                }
+            }
+        };
+    },
 };

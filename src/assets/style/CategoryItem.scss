@@ -1,0 +1,5 @@
+.category-item {
+  &.active {
+    @apply text-blue-600;
+  }
+}

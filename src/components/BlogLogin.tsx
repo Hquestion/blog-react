@@ -9,7 +9,9 @@ import '../assets/style/BlogLogin.scss'
 
 interface ILoginProps {
     visible: boolean,
-    setVisible: (isVisible: boolean) => void
+    setVisible: (isVisible: boolean, isResolved?: boolean) => void,
+    onSubmit?: Function,
+    getContainer?: () => HTMLElement
 }
 
 enum loginImgType {
@@ -62,7 +64,18 @@ function BlogLogin(props: ILoginProps) {
     }
 
     function handleCancel() {
-        props.setVisible(false);
+        props.setVisible(false, false);
+    }
+
+    function handleSubmit() {
+        // await login 提交
+        setConfirmLoading(true);
+        setTimeout(() => {
+            setConfirmLoading(false);
+            props.setVisible(false, true);
+            props.onSubmit && props.onSubmit(username, password);
+        }, 2000);
+
     }
 
     return (
@@ -74,12 +87,14 @@ function BlogLogin(props: ILoginProps) {
             footer={null}
             width={360}
             style={{top: '200px'}}
+            getContainer={props.getContainer || document.body}
         >
             <ModalTitle status={status}/>
             <h2 className="font-bold text-xl text-gray-800 my-2">密码登陆</h2>
             <Form
                 { ...layout }
                 layout='vertical'
+                onSubmitCapture={handleSubmit}
             >
                 <Form.Item name="username">
                     <div className="flex justify-start items-center">

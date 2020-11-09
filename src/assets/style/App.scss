@@ -12,3 +12,7 @@ button:focus {
 @import "~tailwindcss/components";
 @import "~tailwindcss/utilities";
 @import '~antd/dist/antd.css';
+
+body {
+  @apply bg-gray-100;
+}

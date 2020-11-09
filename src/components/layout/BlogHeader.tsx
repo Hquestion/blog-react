@@ -4,6 +4,9 @@ import logo from '../../assets/img/logo.svg';
 import { Button, Avatar, Dropdown, Menu } from 'antd';
 import { UserOutlined, BookOutlined, StarOutlined, PoweroffOutlined } from '@ant-design/icons';
 import { isLogin } from "../../utils";
+import AuthWrapper from "../AuthWrapper";
+
+const AuthButton = AuthWrapper(Button);
 
 function UserMenu() {
     function handleClick(e: any) {
@@ -40,14 +43,23 @@ function UserMenu() {
 
 function BlogHeader() {
     const [avatar, setAvatar] = useState('');
+    const handleClick = (...rest: any[]) => {
+        alert(rest[0])
+    }
     return (
-        <div className="w-full h-12 bg-black text-white fixed top-0 left-0">
+        <div className="w-full h-16 bg-black text-white fixed top-0 left-0">
             <div className="container mx-auto flex justify-between items-center px-8">
                 <Link to="/" style={{ 'fontSize': 0 }}>
-                    <img src={logo} className="w-12 h-12" alt=""/>
+                    <img src={logo} className="w-16 h-16" alt=""/>
                 </Link>
                 <div className="login flex justify-around items-center">
-                    <Button type="link" className="text-blue-300 hover:text-blue-400 active:text-blue-500 focus:text-blue-500">写文章</Button>
+                    <AuthButton
+                        type="link"
+                        className="text-blue-300 hover:text-blue-400 active:text-blue-500 focus:text-blue-500"
+                        onClick={() => handleClick()}
+                    >
+                        写文章
+                    </AuthButton>
                     <Dropdown overlay={UserMenu} trigger={['click']}>
                         <Avatar className="mx-4 cursor-pointer" src={''} icon={<UserOutlined />} />
                     </Dropdown>
