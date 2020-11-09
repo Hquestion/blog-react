@@ -49,7 +49,14 @@ function UserLoginToggle() {
     }
     if (!isLogin()) {
         return (
-            <Button type="link" icon={<UserOutlined/>} size="middle" onClick={handleLogin}>登录</Button>
+            <AuthButton
+                type="link"
+                icon={<UserOutlined />}
+                size="middle"
+                onClick={handleLogin}
+            >
+                登录
+            </AuthButton>
         )
     }
     return (

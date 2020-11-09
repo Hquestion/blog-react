@@ -6,6 +6,8 @@ import loginNormal from '../assets/img/login-normal.png';
 import loginGreeting from '../assets/img/login-greeting.png';
 import loginPwd from '../assets/img/login-pwd.png';
 import '../assets/style/BlogLogin.scss'
+import {login} from "../api/auth";
+import { useLoginContext } from "../context/login-context";
 
 interface ILoginProps {
     visible: boolean,
@@ -49,6 +51,7 @@ function BlogLogin(props: ILoginProps) {
     const [password, setPassword] = useState('');
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [status, setStatus]= useState<loginImgType>(loginImgType.NORMAL);
+    const { setToken, setUser } = useLoginContext();
 
     const layout = {
         labelCol: { span: 24 },
@@ -70,12 +73,14 @@ function BlogLogin(props: ILoginProps) {
     function handleSubmit() {
         // await login 提交
         setConfirmLoading(true);
-        setTimeout(() => {
+        login(username, password).promise.then((res) => {
+            console.log(res);
             setConfirmLoading(false);
             props.setVisible(false, true);
+            localStorage.setItem('authToken', res.data.token);
+            setToken(res.data.token);
             props.onSubmit && props.onSubmit(username, password);
-        }, 2000);
-
+        })
     }
 
     return (
@@ -125,7 +130,6 @@ function BlogLogin(props: ILoginProps) {
                     <Button type="primary" htmlType="submit" block={true} className="login-form-button">
                         登录
                     </Button>
-                    Or <a href="">register now!</a>
                 </Form.Item>
             </Form>
         </Modal>

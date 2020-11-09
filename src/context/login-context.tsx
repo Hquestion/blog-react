@@ -40,8 +40,14 @@ function useLoginContext() {
     }
     const [state, dispatch]: [IUserState, any] = context;
     const isLogin = () => state && state.token;
-    const setToken = (token: string) => dispatch(LoginActionTypes.SET_TOKEN, token);
-    const setUser = (data: any) => dispatch(LoginActionTypes.SET_USER_INFO, data);
+    const setToken = (token: string) => dispatch({
+        type: LoginActionTypes.SET_TOKEN,
+        data: { token }
+    });
+    const setUser = (data: any) => dispatch({
+        type: LoginActionTypes.SET_USER_INFO,
+        data: { user: data}
+    });
 
     return {
         state,

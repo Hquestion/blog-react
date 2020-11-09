@@ -11,7 +11,7 @@ module.exports = {
             ...devServerConfig,
             proxy: {
                 '/api/v1': {
-                    target: 'http://localhost:7002'
+                    target: 'http://localhost:7001'
                 }
             }
         };
