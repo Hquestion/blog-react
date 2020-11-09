@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import logo from '../../assets/img/logo.svg';
 import { Button, Avatar, Dropdown, Menu } from 'antd';
-import { UserOutlined, BookOutlined, StarOutlined, PoweroffOutlined } from '@ant-design/icons';
-import { isLogin } from "../../utils";
+import { UserOutlined, BookOutlined, StarOutlined, PoweroffOutlined, EditOutlined } from '@ant-design/icons';
 import AuthWrapper from "../AuthWrapper";
+import { useLoginContext } from '../../context/login-context';
 
 const AuthButton = AuthWrapper(Button);
 
 function UserMenu() {
+    const { isLogin } = useLoginContext();
     function handleClick(e: any) {
         console.log(e);
         if (isLogin()) {
@@ -41,8 +42,26 @@ function UserMenu() {
     );
 }
 
+function UserLoginToggle() {
+    const { isLogin } = useLoginContext();
+    const handleLogin = () => {
+        alert('登录');
+    }
+    if (!isLogin()) {
+        return (
+            <Button type="link" icon={<UserOutlined/>} size="middle" onClick={handleLogin}>登录</Button>
+        )
+    }
+    return (
+        <Dropdown overlay={UserMenu} trigger={['click']}>
+            <Avatar className="mx-4 cursor-pointer" src={''} icon={<UserOutlined />} />
+        </Dropdown>
+    )
+}
+
 function BlogHeader() {
     const [avatar, setAvatar] = useState('');
+    const { isLogin } = useLoginContext();
     const handleClick = (...rest: any[]) => {
         alert(rest[0])
     }
@@ -55,14 +74,12 @@ function BlogHeader() {
                 <div className="login flex justify-around items-center">
                     <AuthButton
                         type="link"
-                        className="text-blue-300 hover:text-blue-400 active:text-blue-500 focus:text-blue-500"
+                        icon={<EditOutlined />}
                         onClick={() => handleClick()}
                     >
                         写文章
                     </AuthButton>
-                    <Dropdown overlay={UserMenu} trigger={['click']}>
-                        <Avatar className="mx-4 cursor-pointer" src={''} icon={<UserOutlined />} />
-                    </Dropdown>
+                    <UserLoginToggle />
                 </div>
             </div>
         </div>
