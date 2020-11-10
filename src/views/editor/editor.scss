@@ -1,0 +1,23 @@
+.blog-editor-wrapper {
+    height: calc(100vh - 4rem);
+    .blog-editor-header {
+        .title-input {
+            height: 45px;
+            @apply border-b-0;
+            @apply border-r-0 #{!important};
+            @apply border-t-0;
+            @apply border-l-0;
+            &:focus {
+                box-shadow: none;
+                @apply border-r-0 #{!important};
+                @apply border-t-0;
+                @apply border-l-0;
+                @apply border-b;
+                @apply border-blue-600;
+            }
+        }
+    }
+    .blog-editor__main {
+        height: calc(100% - 3rem - 32px - 45px);
+    }
+}

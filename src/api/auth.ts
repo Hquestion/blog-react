@@ -8,3 +8,7 @@ export function login(username: string, password: string) {
         }
     })
 }
+
+export function logout() {
+    return sendPost('/logout');
+}

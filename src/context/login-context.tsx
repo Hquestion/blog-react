@@ -1,4 +1,5 @@
-import React, {createContext, useContext, useMemo, useReducer, ReducerWithoutAction} from 'react';
+import React, {createContext, useContext, useMemo, useReducer, ReducerWithoutAction, useEffect} from 'react';
+import {sendGet} from "../utils/http";
 
 export enum LoginActionTypes {
     SET_USER_INFO,
@@ -60,7 +61,29 @@ function useLoginContext() {
 
 function LoginProvider(props: any) {
     const [state, dispatch]: [IUserState, any] = useReducer(loginReducer as ReducerWithoutAction<any>, defaultContext);
-    const value = useMemo(() => [state, dispatch], [state])
+    const value = useMemo(() => [state, dispatch], [state]);
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        dispatch({
+            type: LoginActionTypes.SET_TOKEN,
+            data: { token }
+        });
+        sendGet('/userInfo').promise.then((res) => {
+            dispatch({
+                type: LoginActionTypes.SET_USER_INFO,
+                data: {user: res}
+            });
+        }, () => {
+            dispatch({
+                type: LoginActionTypes.SET_TOKEN,
+                data: { token: '' }
+            });
+            dispatch({
+                type: LoginActionTypes.SET_USER_INFO,
+                data: { user: null }
+            });
+        });
+    }, []);
     return (
         <LoginContext.Provider
             value={value}

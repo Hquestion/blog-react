@@ -1,10 +1,9 @@
 import React from "react";
+import Posts from "../article/Posts";
 
 function Home() {
     return (
-        <div className="home">
-            this is home!
-        </div>
+        <Posts />
     )
 }
 

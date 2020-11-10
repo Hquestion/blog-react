@@ -7,6 +7,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
+    config.headers.Authorization = 'Bearer ' + localStorage.getItem('authToken');
     return config;
 }, (err) => {
     return Promise.reject(err);
@@ -24,7 +25,7 @@ const sendRequest = (url: string, config?: AxiosRequestConfig) => {
         url,
         ...(config || {}),
         cancelToken: signal.token
-    })
+    });
     const cancellablePromise = { promise, _cancelToken: signal };
     return cancellablePromise;
 }

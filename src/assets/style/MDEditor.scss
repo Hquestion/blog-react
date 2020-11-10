@@ -1,0 +1,26 @@
+.md-editor-wrapper {
+    @apply h-full;
+    .toolbar {
+        height: 2rem;
+        .icon {
+            @apply ml-2;
+            @apply cursor-pointer;
+            @apply text-gray-600;
+            &:hover {
+                @apply text-blue-300;
+            }
+            &.is-active {
+                @apply text-blue-700;
+            }
+        }
+    }
+    .editor-wrapper {
+        height: calc(100% - 2rem);
+        .md-mirror {
+            @apply h-full;
+            .CodeMirror {
+                @apply h-full;
+            }
+        }
+    }
+}
