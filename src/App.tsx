@@ -6,6 +6,7 @@ import { BackTop } from "antd";
 import { Switch, Route } from 'react-router-dom';
 import Home from "./views/home/Home";
 import Editor from "./views/editor/Editor";
+import Publish from "./views/publish/Publish";
 
 function App() {
 
@@ -16,6 +17,9 @@ function App() {
                 <Switch>
                     <Route exact={true} path="/post/edit/:uuid?">
                         <Editor />
+                    </Route>
+                    <Route exact={true} path="/post/publish/:uuid?">
+                        <Publish />
                     </Route>
                     <Route exact={true} path="/">
                         <Home />

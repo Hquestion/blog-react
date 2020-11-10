@@ -5,9 +5,11 @@ import MdEditor from "./MDEditor";
 import './editor.scss';
 import {Button, Input} from "antd";
 import {throttle} from "../../utils";
+import { createPost, createDraft } from "../../api/post";
+import {Post} from "../article/types";
 
-const doSaveDraft = throttle((code: string) => {
-    console.log(code);
+const doSaveDraft = throttle((title: string, code: string) => {
+    console.log(title, code);
 }, 3000);
 
 function Editor() {
@@ -21,13 +23,23 @@ function Editor() {
     const handleCodeUpdate = (str: string) => {
         setCode(str);
         // 自动保存草稿
-        doSaveDraft(str);
+        doSaveDraft(title, str);
     }
     const handleSaveDraft = () => {
         // todo 保存草稿
+        createDraft({
+            title,
+            content: code
+        })
     }
     const handleSave = () => {
         // todo 保存正式文章
+        createPost({
+            title,
+            content: code
+        }).promise.then((res) => {
+            history.push(`/post/publish/${(res as Partial<Post>).uuid}`)
+        });
     }
     return (
         <div className="blog-editor-wrapper w-full">
