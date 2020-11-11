@@ -8,5 +8,17 @@ export interface Post {
     star?: number,
     createdAt: string,
     updatedAt: string,
-    cover?: string
+    cover?: string,
+    user?: IUser
+}
+
+export interface IUser {
+    uuid: string,
+    name: string,
+    avatar?: string | undefined,
+    nickname: string | undefined,
+    createdAt: string,
+    updatedAt: string,
+    phone?: string,
+    email?: string,
 }

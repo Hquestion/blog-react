@@ -1,0 +1,18 @@
+.post-tools {
+    position: absolute;
+    left: -40px;
+    top: 100px;
+    .post-tool-icon {
+        @apply w-8;
+        @apply h-8;
+        @apply rounded-full;
+        @apply text-center;
+        @apply text-gray-600;
+        @apply cursor-pointer;
+        line-height: 2rem;
+        background: rgba(255,255,255,.8);
+        &:hover {
+            @apply text-yellow-600;
+        }
+    }
+}

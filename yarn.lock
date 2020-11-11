@@ -1881,6 +1881,11 @@
   resolved "http://183.95.186.9:4873/@types%2funist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha1-nAiGeYdvN061mD8VDUeHqm+zLX4=
 
+"@types/uuid@^8.3.0":
+  version "8.3.0"
+  resolved "http://183.95.186.9:4873/@types%2fuuid/-/uuid-8.3.0.tgz#215c231dff736d5ba92410e6d602050cce7e273f"
+  integrity sha1-IVwjHf9zbVupJBDm1gIFDM5+Jz8=
+
 "@types/webpack-sources@*":
   version "2.0.0"
   resolved "http://183.95.186.9:4873/@types%2fwebpack-sources/-/webpack-sources-2.0.0.tgz#08216ab9be2be2e1499beaebc4d469cec81e82a7"
@@ -6100,6 +6105,11 @@ hex-color-regex@^1.1.0:
   version "1.1.0"
   resolved "http://183.95.186.9:4873/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha1-TAb8y0YC/iYCs8k9+C1+fb8aio4=
+
+highlight.js@^10.3.2:
+  version "10.3.2"
+  resolved "http://183.95.186.9:4873/highlight.js/-/highlight.js-10.3.2.tgz#135fd3619a00c3cbb8b4cd6dbc78d56bfcbc46f1"
+  integrity sha1-E1/TYZoAw8u4tM1tvHjVa/y8RvE=
 
 history@^4.9.0:
   version "4.10.1"

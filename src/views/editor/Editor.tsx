@@ -7,6 +7,7 @@ import {Button, Input} from "antd";
 import {throttle} from "../../utils";
 import { createPost, createDraft } from "../../api/post";
 import {Post} from "../article/types";
+import {uploadPastedImg} from "../../api/common";
 
 const doSaveDraft = throttle((title: string, code: string) => {
     console.log(title, code);
@@ -16,8 +17,7 @@ function Editor() {
     const [code, setCode] = useState('');
     const [ title, setTitle ] = useState('');
     const history = useHistory();
-    console.log(useParams())
-    const upload = (blob: Blob) => Promise.resolve('xx');
+    const upload = (blob: Blob) => uploadPastedImg(blob) as Promise<string>;
 
     const handleCancel = () => history.goBack();
     const handleCodeUpdate = (str: string) => {

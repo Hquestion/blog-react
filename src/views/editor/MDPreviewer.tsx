@@ -1,7 +1,24 @@
 import React, {useState, useEffect, forwardRef} from "react";
 import marked from "marked";
+import hljs from 'highlight.js';
 require('github-markdown-css');
 require('./md-previewer.scss');
+require('highlight.js/styles/dark.css');
+
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    // gfm: true,
+    pedantic: false,
+    sanitize: false,
+    breaks: true,
+    smartLists: true,
+    smartypants: true,
+    langPrefix: 'hljs',
+    highlight: function (code, lang) {
+        return lang ? hljs.highlight(lang, code).value : hljs.highlightAuto(code).value;
+    }
+
+});
 
 export interface IPreviewerProps {
     value: string,

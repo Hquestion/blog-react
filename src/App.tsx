@@ -7,6 +7,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from "./views/home/Home";
 import Editor from "./views/editor/Editor";
 import Publish from "./views/publish/Publish";
+import PostDetail from "./views/article/PostDetail";
 
 function App() {
 
@@ -20,6 +21,9 @@ function App() {
                     </Route>
                     <Route exact={true} path="/post/publish/:uuid?">
                         <Publish />
+                    </Route>
+                    <Route exact={true} path="/post/:uuid?">
+                        <PostDetail />
                     </Route>
                     <Route exact={true} path="/">
                         <Home />

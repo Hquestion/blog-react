@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, SmileOutlined } from '@ant-design/icons';
 import { Button } from "antd";
 import { useParams, useHistory } from 'react-router-dom';
 import { Post } from "../article/types";
@@ -24,15 +24,15 @@ export default function Publish() {
     }
 
     return (
-        <div className="publish container mx-auto py-10 text-center">
-            <CheckOutlined className="text-green-600 success-icon text-4xl" />
+        <div className="publish container mx-auto pt-16 text-center">
+            <SmileOutlined className="text-yellow-500 success-icon text-4xl" />
             <div className="text-xl py-4">
                 您的文章《{post.title}》已发表成功，继续补全以下信息
             </div>
-            <PostMetaForm className="mx-auto" />
-            <div className="publish__footer mt-8">
-                <Button type="default" size="large" onClick={goHome}>以后再说</Button>
-                <Button type="primary" size="large" className="ml-8">保存</Button>
+            <PostMetaForm className="mx-auto mt-6" />
+            <div className="publish__footer mt-8 mx-auto flex justify-end">
+                <Button type="link" size="large" onClick={goHome}>以后再说</Button>
+                <Button type="primary" size="large" className="ml-4">保存</Button>
             </div>
         </div>
     );
