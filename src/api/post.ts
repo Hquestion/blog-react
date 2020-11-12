@@ -1,4 +1,4 @@
-import http, {sendGet, sendPost} from '../utils/http';
+import http, {sendGet, sendPost, sendUpdate} from '../utils/http';
 import { Post } from '../views/article/types'
 
 export const POSTS_PAGINATION_URL = '/posts';
@@ -30,7 +30,22 @@ export function createDraft(data: Partial<Post>) {
     });
 }
 
+export function updatePost(uuid: string, data: Partial<Post>) {
+    return sendUpdate(`/posts/${uuid}`, {
+        data: data
+    });
+}
+
 export function getPostDetail(id: string) {
     return sendGet(`/posts/${id}`);
+}
+
+export function getPostCommentsByPage(uuid: string, page: number = 1, pageSize: number = 10) {
+    return sendGet(`/posts/${uuid}/comments`, {
+        params: {
+            page,
+            pageSize
+        }
+    });
 }
 

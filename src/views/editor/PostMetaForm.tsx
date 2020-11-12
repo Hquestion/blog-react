@@ -1,42 +1,47 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Form, Input, Select, Upload} from "antd";
-import { DoubleLeftOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import classNames from "classnames";
+import React, {useRef, useState} from 'react';
+import {Form, Input, Select, Upload, Button} from "antd";
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import './PostMetaForm.scss';
 
 interface IPostFormProps {
     meta?: Partial<{
-        title: string,
         subtitle: string,
         category: string,
         tags: string[],
         series: string,
         cover: string
     }>,
-    className?: string
+    className?: string,
+    onUpdateMeta: Function
 }
 
 export default function PostMetaForm(props: IPostFormProps) {
-    const { meta = {} } = props;
-    const [subtitle, setSubtitle] = useState(meta.subtitle || '');
-    const [category, setCategory] = useState(meta.category || '');
-    const [tags, setTags] = useState((meta.tags && meta.tags.join(',')) || '');
-    const [series, setSeries] = useState(meta.series || '');
-    const [cover, setCover] = useState(meta.cover || '');
+    const { meta = {}, onUpdateMeta } = props;
+    const { subtitle, category, tags, series, cover } = meta;
     const [isUploading, setIsUploading] = useState(false);
     const form = useRef();
 
-    useEffect(() => {
-        setSubtitle(meta.title || '');
-        setSubtitle(meta.subtitle || '');
-        setSubtitle(meta.category || '');
-        setSubtitle((meta.tags && meta.tags.join(',')) || '');
-        setSubtitle(meta.series || '');
-        setSubtitle(meta.cover || '');
-    }, [meta]);
-
     const beforeUpload = () => {
         return Promise.resolve();
+    }
+
+    const setCover = (url: string) => {
+        onUpdateMeta({ ...meta, cover: url });
+    }
+    const setSubtitle = (subtitle: string) => {
+        onUpdateMeta({ ...meta, subtitle });
+    }
+
+    const setCategory = (category: string) => {
+        onUpdateMeta({ ...meta, category });
+    }
+
+    const setTags = (tags: string[]) => {
+        onUpdateMeta({ ...meta, tags });
+    }
+
+    const setSeries = (series: string) => {
+        onUpdateMeta({ ...meta, series });
     }
 
     function getBase64(img: Blob, callback: (imageUrl: string | null) => void) {
@@ -46,16 +51,18 @@ export default function PostMetaForm(props: IPostFormProps) {
     }
 
     const handleChange = (info: any) => {
+        console.log(info);
         if (info.file.status === 'uploading') {
             setIsUploading(true);
+            // getBase64(info.file.originFileObj, (imageUrl: string | null) => {
+                // setIsUploading(false);
+                // setCover(imageUrl || '');
+            // });
             return;
         }
         if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj, (imageUrl: string | null) => {
-                setIsUploading(false);
-                setCover(imageUrl || '');
-            });
+            setIsUploading(false);
+            setCover(info.file.response);
         }
     }
 
@@ -66,9 +73,11 @@ export default function PostMetaForm(props: IPostFormProps) {
         </div>
     );
 
+    const handleAddSeries = () => {}
+
     return (
         <Form ref={form as any} size="large" className={'post-meta-form text-left ' + props.className || ''}>
-            <Form.Item name="cover">
+            <Form.Item>
                 <Upload
                     name="files"
                     listType="picture-card"
@@ -81,26 +90,27 @@ export default function PostMetaForm(props: IPostFormProps) {
                     {cover ? <img src={cover} alt="cover" style={{ width: '100%' }} /> : uploadButton}
                 </Upload>
             </Form.Item>
-            <Form.Item name="subtitle" className="mb-4">
+            <Form.Item className="mb-4">
                 <Input type="text" placeholder="输入副标题" value={subtitle}
                        onInput={(e) => setSubtitle((e as any).target.value)}/>
             </Form.Item>
-            <Form.Item name="category">
-                <Select placeholder="加入类别" value={category} onChange={setCategory}>
+            <Form.Item name={'category'}>
+                <Select placeholder="所属类别" value={category} onChange={setCategory}>
                     <Select.Option value={1} title="前端">前端</Select.Option>
                 </Select>
             </Form.Item>
-            <Form.Item name="tags">
+            <Form.Item>
                 <Select mode="tags" placeholder="添加标签" value={tags} onChange={setTags} tokenSeparators={[',']}>
-                    <Select.Option value={1} title="前端">Vue</Select.Option>
-                    <Select.Option value={2} title="前端">React</Select.Option>
+                    <Select.Option value={'1'} title="前端">Vue</Select.Option>
+                    <Select.Option value={'2'} title="前端">React</Select.Option>
                 </Select>
             </Form.Item>
-            <Form.Item name="series">
-                <Select mode="tags" placeholder="加入系列" value={series} onChange={setSeries} tokenSeparators={[',']}>
+            <Form.Item name={'series'}>
+                <Select placeholder="加入系列" value={series} onChange={setSeries}>
                     <Select.Option value={1} title="前端">Vue</Select.Option>
                     <Select.Option value={2} title="前端">React</Select.Option>
                 </Select>
+                <Button type="link" size={"small"} className="mt-1" onClick={handleAddSeries}>添加系列</Button>
             </Form.Item>
         </Form>
     )

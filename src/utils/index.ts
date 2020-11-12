@@ -1,7 +1,3 @@
-export function isLogin() {
-    return false;
-}
-
 export function throttle(fn: Function, ms = 3000) {
     var lastTime : undefined | number = undefined;
     return function(...rest: any) {

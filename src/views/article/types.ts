@@ -6,6 +6,7 @@ export interface Post {
     read?: number,
     fav?: number,
     star?: number,
+    isPublished: boolean | string,
     createdAt: string,
     updatedAt: string,
     cover?: string,
@@ -21,4 +22,18 @@ export interface IUser {
     updatedAt: string,
     phone?: string,
     email?: string,
+}
+
+export interface IComment {
+    uuid: string,
+    content: string,
+    post: string,
+    user: string,
+    comment: string,
+    updatedAt: string,
+    createdAt: string,
+    isDelete: '0' | '1',
+    userMeta: IUser,
+    postMeta: Post,
+    commentMeta: Partial<IComment>
 }

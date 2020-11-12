@@ -4,7 +4,6 @@ import logo from '../../assets/img/logo.svg';
 import { Button, Avatar, Dropdown, Menu } from 'antd';
 import { UserOutlined, BookOutlined, StarOutlined, PoweroffOutlined, EditOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import AuthWrapper from "../AuthWrapper";
 import { useLoginContext } from '../../context/login-context';
 import { logout } from "../../api/auth";
 
@@ -15,21 +14,15 @@ enum MenuKeys {
     LOGOUT = "LOGOUT"
 }
 
-const AuthButton = AuthWrapper(Button);
-
 function UserLoginToggle() {
-    const { isLogin, setToken, setUser } = useLoginContext();
-
-    const handleLogin = () => {
-        alert('登录');
-    }
+    const { isLogin, setToken, setUser, toggleLogin } = useLoginContext();
 
     const handleMenuClick: ({key}: { key: React.Key }) => void = ( { key }) => {
         switch (key) {
             case MenuKeys.LOGOUT:
                 logout().promise.then(() => {
                     setToken('');
-                    setUser(null);
+                    setUser({});
                 });
                 break;
             default:
@@ -65,14 +58,14 @@ function UserLoginToggle() {
 
     if (!isLogin()) {
         return (
-            <AuthButton
+            <Button
                 type="link"
                 icon={<UserOutlined />}
                 size="middle"
-                onClick={handleLogin}
+                onClick={() => toggleLogin(true)}
             >
                 登录
-            </AuthButton>
+            </Button>
         )
     }
     return (
@@ -84,10 +77,14 @@ function UserLoginToggle() {
 
 function BlogHeader() {
     const [avatar, setAvatar] = useState('');
-    const { isLogin } = useLoginContext();
+    const { isLogin, toggleLogin } = useLoginContext();
     const history = useHistory();
     const handleClick = () => {
-        history.push('/post/edit');
+        if (isLogin()) {
+            history.push('/post/edit');
+        } else {
+            toggleLogin(true);
+        }
     }
     return (
         <div className="w-full h-16 bg-black text-white fixed top-0 left-0 z-10">
@@ -96,13 +93,13 @@ function BlogHeader() {
                     <img src={logo} className="w-16 h-16" alt=""/>
                 </Link>
                 <div className="login flex justify-around items-center">
-                    <AuthButton
+                    <Button
                         type="link"
                         icon={<EditOutlined />}
                         onClick={() => handleClick()}
                     >
                         写文章
-                    </AuthButton>
+                    </Button>
                     <UserLoginToggle />
                 </div>
             </div>

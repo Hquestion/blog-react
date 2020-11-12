@@ -1,7 +1,7 @@
 .post-tools {
-    position: absolute;
-    left: -40px;
-    top: 100px;
+    position: fixed;
+    margin-left: -40px;
+    top: 150px;
     .post-tool-icon {
         @apply w-8;
         @apply h-8;
@@ -13,6 +13,13 @@
         background: rgba(255,255,255,.8);
         &:hover {
             @apply text-yellow-600;
+        }
+    }
+    .starred-icon {
+        transition: all ease .5s;
+        transform: scale(1) translateY(0);
+        &.is-highlight {
+            transform: scale(1.4) translateY(-5px);
         }
     }
 }

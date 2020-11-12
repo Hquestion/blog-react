@@ -12,7 +12,7 @@ import PostTools from "./PostTools";
 import AboutAuthor from "./AboutAuthor";
 
 export default function PostDetail() {
-    const params: {uuid: string} = useParams();
+    let params: {uuid: string} = useParams();
     const history = useHistory();
     const [data, setData]: [Partial<Post>, any] = useState({});
     useEffect(() => {
@@ -25,7 +25,7 @@ export default function PostDetail() {
         }
     }, [])
     return (
-        <div className="post-detail relative container mx-auto mt-4">
+        <div className="post-detail relative container mx-auto py-4">
             <PostTools onFav={() => {}} onStar={() => {}} post={data} />
             <div className="post-detail-left w-3/4 p-4 bg-white">
                 <Author user={data.user || {}} post={data} />
@@ -35,7 +35,7 @@ export default function PostDetail() {
                 {
                     data.cover && (
                         <div className="mt-4 p-5">
-                            <Image src={data.cover} width={'100%'} style={{maxHeight: '120px'}}/>
+                            <Image src={data.cover} width={'100%'} placeholder={true}/>
                         </div>
                     )
                 }
@@ -43,9 +43,9 @@ export default function PostDetail() {
                     <ForwardedMDPreviewer value={data.content || ''} />
                 </div>
                 <Author className="mt-4" user={data.user || {}} background={true}/>
-                <BlogComment post={data} />
+                <BlogComment post={data} postId={ params.uuid } />
             </div>
-            <div className="right ml-2 flex-auto">
+            <div className="right ml-4 flex-auto">
                 <AboutAuthor user={data.user || {}} />
             </div>
         </div>

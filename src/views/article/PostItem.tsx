@@ -24,8 +24,8 @@ function PostItem(props: {data: Partial<Post>}) {
                 </div>
                 {
                     data.cover && (
-                        <div className="w-32">
-                            <img className="h-24 mx-auto" src={data.cover} />
+                        <div className="w-32 text-right">
+                            <img className="h-24 object-cover mx-auto" src={data.cover} />
                         </div>
                     )
                 }

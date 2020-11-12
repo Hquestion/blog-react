@@ -1,0 +1,21 @@
+.user-comment-item {
+    .del-icon {
+        opacity: 0;
+        transition: opacity ease .2s;
+    }
+    .comment-btn {
+        opacity: 0;
+        transition: opacity ease .2s;
+    }
+    &:hover {
+        .del-icon {
+            opacity: 1;
+        }
+        .comment-btn {
+            opacity: 1;
+        }
+    }
+    & + .user-comment-item {
+        @apply mt-2;
+    }
+}
