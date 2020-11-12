@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import MdEditor from "./MDEditor";
 import './editor.scss';
-import {Button, Input} from "antd";
+import {Button, Input, notification} from "antd";
 import {throttle} from "../../utils";
 import {createPost, createDraft, updatePost} from "../../api/post";
 import {Post} from "../article/types";
@@ -55,7 +55,13 @@ function Editor() {
         }
     }
     const handleSave = () => {
-        // todo 保存正式文章
+        if (!title.trim()) {
+            notification.warning({
+                message: '给你的大作取个霸气的名字吧~',
+                description: '看到你的第一眼，就深陷其中，不能自拔...'
+            });
+            return;
+        }
         if (draftId) {
             updatePost(draftId, {
                 title,
