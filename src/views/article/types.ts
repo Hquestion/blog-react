@@ -22,6 +22,9 @@ export interface IUser {
     updatedAt: string,
     phone?: string,
     email?: string,
+    company?: string,
+    location? :string,
+    techStacks: Array<any>
 }
 
 export interface IComment {

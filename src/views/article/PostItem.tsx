@@ -8,7 +8,7 @@ import { relativeTimeFormatter, simplifiedMarkdown } from "../../utils/formatter
 function PostItem(props: {data: Partial<Post>}) {
     const { data } = props;
     return (
-        <div className="post-item w-full lg:w-4/5 xl:4/5 bg-white shadow-md py-3 px-4 my-6 rounded-sm">
+        <div className="post-item w-full bg-white shadow-md py-3 px-4 my-6 rounded-sm">
             <div className="post-item__main flex items-center justify-start">
                 <div className="post-item__content flex-grow">
                     <p className="text-gray-400 text-xs">

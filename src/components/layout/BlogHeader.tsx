@@ -8,6 +8,9 @@ import { useLoginContext } from '../../context/login-context';
 import { logout } from "../../api/auth";
 
 enum MenuKeys {
+    CENTER = 'CENTER',
+    MY_SERIES = 'MY_SERIES',
+    MY_DRAFT = 'MY_DRAFT',
     MY_ARTICLE = "MY_ARTICLE",
     MY_FAV = "MY_FAV",
     MY_TAG = "MY_TAG",
@@ -15,7 +18,7 @@ enum MenuKeys {
 }
 
 function UserLoginToggle() {
-    const { isLogin, setToken, setUser, toggleLogin } = useLoginContext();
+    const { isLogin, setToken, setUser, toggleLogin, state } = useLoginContext();
 
     const handleMenuClick: ({key}: { key: React.Key }) => void = ( { key }) => {
         switch (key) {
@@ -33,19 +36,35 @@ function UserLoginToggle() {
     const userMenu = () => {
         return (
             <Menu onClick={handleMenuClick}>
+                <Menu.Item key={MenuKeys.CENTER} icon={<PoweroffOutlined />}>
+                    <Link to={`/user/${state.user.name}`}>
+                        个人中心
+                    </Link>
+                </Menu.Item>
+                <Menu.Divider />
                 <Menu.Item key={MenuKeys.MY_ARTICLE} icon={<PoweroffOutlined />}>
-                    <Link to="http://www.alipay.com/">
+                    <Link to={`/user/${state.user.name}/posts`}>
                         我的文章
                     </Link>
                 </Menu.Item>
-                <Menu.Item key={MenuKeys.MY_FAV} icon={<StarOutlined />}>
-                    <Link to="http://www.alipay.com/">
-                        我的收藏
+                <Menu.Item key={MenuKeys.MY_DRAFT} icon={<PoweroffOutlined />}>
+                    <Link to={`/user/${state.user.name}/draft`}>
+                        我的草稿
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key={MenuKeys.MY_SERIES} icon={<StarOutlined />}>
+                    <Link to={`/user/${state.user.name}/series`}>
+                        我的系列
                     </Link>
                 </Menu.Item>
                 <Menu.Item key={MenuKeys.MY_TAG} icon={<BookOutlined />}>
-                    <Link to="http://www.alipay.com/">
+                    <Link to={`/user/${state.user.name}/tag`}>
                         我的标签
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key={MenuKeys.MY_FAV} icon={<StarOutlined />}>
+                    <Link to={`/user/${state.user.name}/fav`}>
+                        我的收藏
                     </Link>
                 </Menu.Item>
                 <Menu.Divider />

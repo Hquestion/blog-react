@@ -10,6 +10,7 @@ import Author from "./Author";
 import BlogComment from "./BlogComment";
 import PostTools from "./PostTools";
 import AboutAuthor from "./AboutAuthor";
+import PostCatalog from "./PostCatalog";
 
 export default function PostDetail() {
     let params: {uuid: string} = useParams();
@@ -42,11 +43,15 @@ export default function PostDetail() {
                 <div className="text-left mt-4">
                     <ForwardedMDPreviewer value={data.content || ''} />
                 </div>
+                <div className="text-center text-gray-300 post-footer pt-6">
+                    <span>~~这是作为一个大佬的底线~~</span>
+                </div>
                 <Author className="mt-4" user={data.user || {}} background={true}/>
                 <BlogComment post={data} postId={ params.uuid } />
             </div>
             <div className="right ml-4 flex-auto">
                 <AboutAuthor user={data.user || {}} />
+                <PostCatalog code={(data.content || '') as string} />
             </div>
         </div>
     );

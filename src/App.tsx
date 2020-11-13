@@ -8,6 +8,7 @@ import Home from "./views/home/Home";
 import Editor from "./views/editor/Editor";
 import Publish from "./views/publish/Publish";
 import PostDetail from "./views/article/PostDetail";
+import User from "./views/user/User";
 
 function App() {
 
@@ -24,6 +25,9 @@ function App() {
                     </Route>
                     <Route exact={true} path="/post/:uuid?">
                         <PostDetail />
+                    </Route>
+                    <Route exact={true} path="/user/:username">
+                        <User />
                     </Route>
                     <Route exact={true} path="/">
                         <Home />

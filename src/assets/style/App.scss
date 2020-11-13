@@ -12,7 +12,10 @@ button:focus {
 @import "~tailwindcss/components";
 @import "~tailwindcss/utilities";
 @import '~antd/dist/antd.css';
-
+html {
+    scroll-behavior: smooth;
+}
 body {
-  @apply bg-gray-100;
+    @apply bg-gray-100;
+    scroll-behavior: smooth;
 }
