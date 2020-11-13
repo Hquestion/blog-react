@@ -26,7 +26,7 @@ function App() {
                     <Route exact={true} path="/post/:uuid?">
                         <PostDetail />
                     </Route>
-                    <Route exact={true} path="/user/:username">
+                    <Route exact={true} path="/user/:username/:sub?">
                         <User />
                     </Route>
                     <Route exact={true} path="/">
