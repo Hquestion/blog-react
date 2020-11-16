@@ -35,7 +35,7 @@ function Posts() {
     return (
         <>
             <BlogCategory />
-            <div className="container mx-auto" ref={ref}>
+            <div className="container mx-auto py-4" ref={ref}>
                 <div className="posts-container w-full lg:w-4/5 xl:4/5">
                     {
                         posts && posts.map((item: Post) => (

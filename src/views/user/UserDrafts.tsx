@@ -1,21 +1,21 @@
 import React, {useEffect, useState} from "react";
-import { getUserPosts } from "../../api/user";
+import { getUserDrafts } from "../../api/user";
 import PostItem from "../article/PostItem";
 
-interface IUserPostProp {
+interface IUserDraftProp {
     userId: string | undefined
 }
 
 const PAGE_SIZE = 10;
 
-const UserPost = (props: IUserPostProp) => {
+const UserDrafts = (props: IUserDraftProp) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [posts, setPosts] = useState([]);
     const [total, setTotal] = useState(0);
     const { userId } = props;
     useEffect(() => {
         if (!userId) return;
-        getUserPosts(userId, currentPage, PAGE_SIZE).then((res) => {
+        getUserDrafts(userId, currentPage, PAGE_SIZE).then((res) => {
             setPosts((res as any).rows || []);
             setTotal((res as any).count || 0);
         });
@@ -33,4 +33,4 @@ const UserPost = (props: IUserPostProp) => {
     );
 }
 
-export default UserPost;
+export default UserDrafts;

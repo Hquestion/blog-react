@@ -7,3 +7,21 @@ export function getUserInfoByUsername(username: string) {
         }
     }).promise;
 }
+
+export function getUserPosts(uuid: string, page: number, pageSize: number) {
+    return sendGet(`/users/${uuid}/getPosts`, {
+        params: {
+            page,
+            pageSize,
+        }
+    }).promise;
+}
+
+export function getUserDrafts(uuid: string, page: number, pageSize: number) {
+    return sendGet(`/users/${uuid}/getDrafts`, {
+        params: {
+            page,
+            pageSize,
+        }
+    }).promise;
+}

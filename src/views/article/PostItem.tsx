@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "antd";
-import { LikeOutlined, StarOutlined, MessageOutlined } from '@ant-design/icons';
+import { LikeOutlined, StarOutlined, CommentOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 import {Post} from "./types";
 import { relativeTimeFormatter, simplifiedMarkdown } from "../../utils/formatter";
@@ -8,7 +8,7 @@ import { relativeTimeFormatter, simplifiedMarkdown } from "../../utils/formatter
 function PostItem(props: {data: Partial<Post>}) {
     const { data } = props;
     return (
-        <div className="post-item w-full bg-white shadow-md py-3 px-4 my-6 rounded-sm">
+        <div className="post-item w-full bg-white shadow-md py-3 px-4 mb-6 rounded-sm border">
             <div className="post-item__main flex items-center justify-start">
                 <div className="post-item__content flex-grow">
                     <p className="text-gray-400 text-xs">
@@ -34,7 +34,7 @@ function PostItem(props: {data: Partial<Post>}) {
             <div className="post-item__footer pb-0">
                 <Button type="text" icon={<LikeOutlined />} />
                 <Button type="text" icon={<StarOutlined />} />
-                <Button type="text" icon={<MessageOutlined />} />
+                <Button type="text" icon={<CommentOutlined />} />
             </div>
         </div>
     );

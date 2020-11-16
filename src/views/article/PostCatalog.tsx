@@ -13,7 +13,7 @@ interface ILevel {
     children: ILevel[]
 }
 
-const reg = /(#{1, })[ ]+([^↵\r\n]+)/gim;
+const reg = /(#+)[ ]+([^\\n\r#])+/g;
 const levelReg = /(#+)[ ]+(.+)/;
 
 const PostCatalog = (props: IPostCatalogProp) => {
@@ -22,7 +22,11 @@ const PostCatalog = (props: IPostCatalogProp) => {
     const ref = useRef();
     useSticky(ref, 100);
     useEffect(() => {
-        const list = code.match(reg);
+        if(!code) {
+            setCatalog([]);
+            return;
+        }
+        const list = JSON.stringify(code).match(reg);
         const levelTree: ILevel[] = [];
         let lastParents: ILevel[] = [];
         if (list) {

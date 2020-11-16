@@ -32,6 +32,9 @@ const defaultContext: IUserState = {
 const loginReducer = (state: IUserState, action: IUserAction) => {
     switch (action.type) {
         case LoginActionTypes.SET_TOKEN:
+            if (!action.data.token) {
+                localStorage.removeItem('authToken');
+            }
             return { ...state, token: action.data.token }
         case LoginActionTypes.SET_USER_INFO:
             return { ...state, user: action.data.user }

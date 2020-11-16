@@ -1,0 +1,15 @@
+.user-series-card {
+    width: 280px;
+    @apply shadow-md;
+    @apply m-2;
+    @apply border;
+    .user-series-card__main {
+        @apply p-4;
+        .ant-avatar {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            display: block;
+        }
+    }
+}

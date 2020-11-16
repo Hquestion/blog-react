@@ -1,0 +1,15 @@
+.user-fav-folder-card {
+    width: 220px;
+    @apply shadow-md;
+    @apply m-2;
+    @apply border;
+    .user-fav-folder-card__main {
+        @apply p-4;
+        .ant-avatar {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            display: block;
+        }
+    }
+}

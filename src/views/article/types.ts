@@ -1,3 +1,5 @@
+export type statusFlag = '0' | '1';
+
 export interface Post {
     uuid: string,
     title: string,
@@ -35,8 +37,34 @@ export interface IComment {
     comment: string,
     updatedAt: string,
     createdAt: string,
-    isDelete: '0' | '1',
+    isDelete: statusFlag,
     userMeta: IUser,
     postMeta: Post,
     commentMeta: Partial<IComment>
+}
+
+export interface ISeries {
+    uuid: string,
+    title: string,
+    postList: Array<{uuid: string, title: string}>,
+    description: string,
+    logo: string,
+    user: string,
+    userMeta: IUser,
+    isDelete: statusFlag,
+    updatedAt: string,
+    createdAt: string
+}
+
+export interface IFavFolders {
+    uuid: string,
+    title: string,
+    favList: Array<{uuid: string, title: string}>,
+    description: string,
+    logo: string,
+    user: string,
+    userMeta: IUser,
+    isDelete: statusFlag,
+    updatedAt: string,
+    createdAt: string
 }

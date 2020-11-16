@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Avatar, Button, Input} from "antd";
-import { UserOutlined, MessageOutlined } from '@ant-design/icons';
+import { UserOutlined, CommentOutlined } from '@ant-design/icons';
 import { useLoginContext } from "../../context/login-context";
 import {addComment} from "../../api/comment";
 import {IComment} from "./types";
@@ -66,7 +66,7 @@ export default function UserCommentInput(props: IUserCommentInputProp) {
                         <Button
                             type="primary"
                             disabled={input.trim() === ''}
-                            icon={<MessageOutlined />}
+                            icon={<CommentOutlined />}
                             onClick={handleComment}
                         >评论</Button>
                     </div>
