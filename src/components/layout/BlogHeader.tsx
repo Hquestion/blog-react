@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import logo from '../../assets/img/logo.svg';
+import logo from '../../assets/img/logo-2-h.png';
 import { Button, Avatar, Dropdown, Menu } from 'antd';
 import { UserOutlined, BookOutlined, StarOutlined, PoweroffOutlined, EditOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
@@ -109,7 +109,7 @@ function BlogHeader() {
         <div className="w-full h-16 bg-black text-white fixed top-0 left-0 z-10">
             <div className="container mx-auto flex justify-between items-center px-8">
                 <Link to="/" style={{ 'fontSize': 0 }}>
-                    <img src={logo} className="w-16 h-16" alt=""/>
+                    <img src={logo} className="h-16" alt=""/>
                 </Link>
                 <div className="login flex justify-around items-center">
                     <Button

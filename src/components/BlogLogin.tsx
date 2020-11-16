@@ -1,6 +1,6 @@
 import React, {PropsWithRef, useState} from 'react';
 import {Form, Input, Modal, Button} from "antd";
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, GithubOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import loginNormal from '../assets/img/login-normal.png';
 import loginGreeting from '../assets/img/login-greeting.png';
@@ -8,6 +8,10 @@ import loginPwd from '../assets/img/login-pwd.png';
 import '../assets/style/BlogLogin.scss'
 import {login} from "../api/auth";
 import { useLoginContext } from "../context/login-context";
+
+const githubLoginUrl = `https://github.com/login/oauth/authorize?
+client_id=${process.env.REACT_APP_GITHUB_CLIENTID}&
+redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT_URL}`
 
 interface ILoginProps {
     visible: boolean,
@@ -132,6 +136,12 @@ function BlogLogin(props: ILoginProps) {
                     </Button>
                 </Form.Item>
             </Form>
+            <div className="text-center">
+                <p className="text-left">或者Github登录</p>
+                <a href={githubLoginUrl} target={"_blank"} className="text-2xl">
+                    <GithubOutlined />
+                </a>
+            </div>
         </Modal>
     )
 }
