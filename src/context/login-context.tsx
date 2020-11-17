@@ -87,7 +87,13 @@ function LoginProvider(props: any) {
     const { children, ...otherProps } = props;
     const getAndCacheUserInfo = () => {
         setIsLoading(true);
-        sendGet('/userInfo').promise.then((res) => {
+        let promise;
+        if (!state.token) {
+            promise = Promise.reject();
+        } else {
+            promise = sendGet('/userInfo').promise;
+        }
+        promise.then((res) => {
             dispatch({
                 type: LoginActionTypes.SET_USER_INFO,
                 data: {user: res}

@@ -6,8 +6,16 @@
     transform: translateX(-50%) translateY(-7px);
   }
   &.is-greeting {
-    img {
-      transform: translateX(-50%) translateY(5px);
-    }
+      img {
+          transform: translateX(-50%) translateY(5px);
+      }
   }
+}
+.icon-indicator {
+    left: 30%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    @apply px-4;
+    @apply bg-white;
 }

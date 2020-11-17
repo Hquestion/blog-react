@@ -25,3 +25,7 @@ export function getUserDrafts(uuid: string, page: number, pageSize: number) {
         }
     }).promise;
 }
+
+export function getUserSkills(uuid: string) {
+    return sendGet(`/users/${uuid}/getSkills`).promise;
+}

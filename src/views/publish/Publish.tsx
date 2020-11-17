@@ -37,7 +37,7 @@ export default function Publish() {
     }
 
     return (
-        <div className="publish container mx-auto pt-16 text-center">
+        <div className="publish container mx-auto pt-16 pb-8 text-center">
             <SmileOutlined className="text-yellow-500 success-icon text-4xl" />
             <div className="text-xl py-4">
                 您的文章《{post.title}》已发表成功，继续补全以下信息

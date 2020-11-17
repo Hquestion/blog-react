@@ -7,6 +7,7 @@ import { useLoginContext } from "../../context/login-context";
 import BlogUpload from "../../components/BlogUpload";
 import {createSeries, getSeriesList} from "../../api/series";
 import './UserSeries.scss';
+import useIsCurrentUser from "../../utils/useIsCurrentUser";
 
 interface IUserSeriesProp {
     userId: string | undefined
@@ -16,22 +17,15 @@ const UserSeries = (props: IUserSeriesProp) => {
     const [series, setSeries] = useState([]);
     const [visible, setVisible] = useState(false);
     const [ seriesMeta, setSeriesMeta ]: [Partial<ISeries>, Function] = useState({});
-    const [isCurrentUser, setIsCurrentUser] = useState(false);
-    const { isLogin, state } = useLoginContext();
     const { userId } = props;
     const { logo, title, description } = seriesMeta;
+    const isCurrentUser = useIsCurrentUser(userId);
 
     useEffect(() => {
         if (userId) {
             getSeries();
         }
     }, [userId]);
-
-    useEffect(() => {
-        if (isLogin() && state.user.uuid === userId) {
-            setIsCurrentUser(true);
-        }
-    }, [userId])
 
     const getSeries = () => {
         if (!userId) return;
@@ -60,7 +54,7 @@ const UserSeries = (props: IUserSeriesProp) => {
             {
                 isCurrentUser && (
                     <div className="user-series__header">
-                        <Button type="primary" onClick={() => setVisible(true)}>创建系列</Button>
+                        <Button type="primary" icon={<ApartmentOutlined />} onClick={() => setVisible(true)}>创建系列</Button>
                     </div>
                 )
             }

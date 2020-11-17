@@ -10,6 +10,7 @@ import Publish from "./views/publish/Publish";
 import PostDetail from "./views/article/PostDetail";
 import User from "./views/user/User";
 import SeriesPosts from "./views/user/series/SeriesPosts";
+import EditUserProfile from "./views/user/profile/EditUserProfile";
 
 function App() {
 
@@ -32,6 +33,9 @@ function App() {
                     </Route>
                     <Route exact={true} path="/series/:seriesId/posts">
                         <SeriesPosts />
+                    </Route>
+                    <Route exact={true} path="/user-edit/:uuid">
+                        <EditUserProfile />
                     </Route>
                     <Route exact={true} path="/">
                         <Home />

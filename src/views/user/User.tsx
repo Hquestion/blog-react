@@ -12,6 +12,7 @@ import UserDrafts from "./UserDrafts";
 import UserSeries from "./UserSeries";
 import UserFav from "./UserFav";
 import useIsCurrentUser from "../../utils/useIsCurrentUser";
+import UserTags from "./UserTags";
 
 enum ROUTE_KEYS {
     POSTS = 'posts',
@@ -74,7 +75,7 @@ const User = () => {
                             <UserSeries userId={user.uuid} />
                         </Route>
                         <Route exact={true} path={`${path}/tag`}>
-                            4
+                            <UserTags userId={user.uuid} />
                         </Route>
                         <Route exact={true} path={`${path}/fav`}>
                             <UserFav userId={user.uuid} />

@@ -26,7 +26,10 @@ export interface IUser {
     email?: string,
     company?: string,
     location? :string,
-    techStacks: Array<any>
+    bio?: string,
+    techStacks: Array<any>,
+    githubUrl?: string,
+    blogUrl?: string
 }
 
 export interface IComment {
@@ -60,6 +63,19 @@ export interface IFavFolders {
     uuid: string,
     title: string,
     favList: Array<{uuid: string, title: string}>,
+    description: string,
+    logo: string,
+    user: string,
+    userMeta: IUser,
+    isDelete: statusFlag,
+    updatedAt: string,
+    createdAt: string
+}
+
+export interface ITag {
+    uuid: string,
+    title: string,
+    postTags: Array<{uuid: string, title?: string}>,
     description: string,
     logo: string,
     user: string,

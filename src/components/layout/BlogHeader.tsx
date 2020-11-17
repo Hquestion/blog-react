@@ -89,7 +89,7 @@ function UserLoginToggle() {
     }
     return (
         <Dropdown overlay={userMenu} trigger={['click']}>
-            <Avatar className="mx-4 cursor-pointer" src={''} icon={<UserOutlined />} />
+            <Avatar className="mx-4 cursor-pointer" src={state.user.avatar} icon={<UserOutlined />} />
         </Dropdown>
     )
 }

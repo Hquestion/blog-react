@@ -1,7 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Form, Input, Select, Upload, Button} from "antd";
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import './PostMetaForm.scss';
+import {useLoginContext} from "../../context/login-context";
+import {getTags} from "../../api/tag";
+import {getSeriesList} from "../../api/series";
+import {ISeries, ITag} from "../article/types";
 
 interface IPostFormProps {
     meta?: Partial<{
@@ -19,7 +23,23 @@ export default function PostMetaForm(props: IPostFormProps) {
     const { meta = {}, onUpdateMeta } = props;
     const { subtitle, category, tags, series, cover } = meta;
     const [isUploading, setIsUploading] = useState(false);
+    const { state } = useLoginContext();
+    const [categories, setCategories]: [Partial<{ uuid: string, title: string }>[], Function] = useState([]);
+    const [tagList, setTagList]: [Partial<ITag>[], Function] = useState([]);
+    const [seriesList, setSeriesList]: [Partial<ISeries>[], Function] = useState([]);
     const form = useRef();
+
+    useEffect(() => {
+        if (!state.user || !state.user.uuid) {
+            return;
+        }
+        getTags(state.user.uuid).then((res) => {
+            setTagList(res as any);
+        });
+        getSeriesList(state.user.uuid).then((res) => {
+            setSeriesList(res as any);
+        });
+    }, []);
 
     const beforeUpload = () => {
         return Promise.resolve();
@@ -44,20 +64,9 @@ export default function PostMetaForm(props: IPostFormProps) {
         onUpdateMeta({ ...meta, series });
     }
 
-    function getBase64(img: Blob, callback: (imageUrl: string | null) => void) {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result as string));
-        reader.readAsDataURL(img);
-    }
-
     const handleChange = (info: any) => {
-        console.log(info);
         if (info.file.status === 'uploading') {
             setIsUploading(true);
-            // getBase64(info.file.originFileObj, (imageUrl: string | null) => {
-                // setIsUploading(false);
-                // setCover(imageUrl || '');
-            // });
             return;
         }
         if (info.file.status === 'done') {
@@ -94,21 +103,31 @@ export default function PostMetaForm(props: IPostFormProps) {
                 <Input type="text" placeholder="输入副标题" value={subtitle}
                        onInput={(e) => setSubtitle((e as any).target.value)}/>
             </Form.Item>
-            <Form.Item name={'category'}>
+            <Form.Item>
                 <Select placeholder="所属类别" value={category} onChange={setCategory}>
-                    <Select.Option value={1} title="前端">前端</Select.Option>
+                    {
+                        categories.map((cate, index) => {
+                            return <Select.Option value={cate.uuid as string} title={cate.title} key={index}>{cate.title}</Select.Option>
+                        })
+                    }
                 </Select>
             </Form.Item>
             <Form.Item>
                 <Select mode="tags" placeholder="添加标签" value={tags} onChange={setTags} tokenSeparators={[',']}>
-                    <Select.Option value={'1'} title="前端">Vue</Select.Option>
-                    <Select.Option value={'2'} title="前端">React</Select.Option>
+                    {
+                        tagList.map((tag, index) => {
+                            return <Select.Option value={tag.uuid as string} title={tag.title} key={index}>{tag.title}</Select.Option>
+                        })
+                    }
                 </Select>
             </Form.Item>
-            <Form.Item name={'series'}>
+            <Form.Item>
                 <Select placeholder="加入系列" value={series} onChange={setSeries}>
-                    <Select.Option value={1} title="前端">Vue</Select.Option>
-                    <Select.Option value={2} title="前端">React</Select.Option>
+                    {
+                        seriesList.map((item, index) => {
+                            return <Select.Option value={item.uuid as string} title={item.title} key={index}>{item.title}</Select.Option>
+                        })
+                    }
                 </Select>
                 <Button type="link" size={"small"} className="mt-1" onClick={handleAddSeries}>添加系列</Button>
             </Form.Item>

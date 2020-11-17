@@ -1,4 +1,4 @@
-import React, {PropsWithRef, useState} from 'react';
+import React, {PropsWithRef, useEffect, useState} from 'react';
 import {Form, Input, Modal, Button} from "antd";
 import { UserOutlined, LockOutlined, GithubOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ import { useLoginContext } from "../context/login-context";
 
 const githubLoginUrl = `https://github.com/login/oauth/authorize?
 client_id=${process.env.REACT_APP_GITHUB_CLIENTID}&
-redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT_URL}`
+redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT_URL}&state=987654321`
 
 interface ILoginProps {
     visible: boolean,
@@ -54,8 +54,17 @@ function BlogLogin(props: ILoginProps) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmLoading, setConfirmLoading] = useState(false);
+    const [oauthWindow, setOauthWindow]: [any, any] = useState();
     const [status, setStatus]= useState<loginImgType>(loginImgType.NORMAL);
     const { setToken, setUser } = useLoginContext();
+
+    useEffect(() => {
+        window.removeEventListener('message', handleOauthMessage)
+        if (oauthWindow) {
+            window.addEventListener('message', handleOauthMessage);
+        }
+        return () => window.removeEventListener('message', handleOauthMessage);
+    }, [oauthWindow]);
 
     const layout = {
         labelCol: { span: 24 },
@@ -87,6 +96,22 @@ function BlogLogin(props: ILoginProps) {
         })
     }
 
+    const handleOauthMessage = ({data}: any) => {
+        if (data.type === 'LOGIN_SUCCESS') {
+            props.setVisible(false, true);
+            localStorage.setItem('authToken', data.data.token);
+            setToken(data.data.token);
+            props.onSubmit && props.onSubmit(data.data.token);
+            oauthWindow.close();
+            setOauthWindow(null);
+        }
+    }
+
+    const handleGithubLogin = () => {
+        const oauthWindow = window.open(githubLoginUrl, '_blank', 'width=700, height=500');
+        setOauthWindow(oauthWindow);
+    }
+
     return (
         <Modal
             title={null}
@@ -98,12 +123,13 @@ function BlogLogin(props: ILoginProps) {
             style={{top: '200px'}}
             getContainer={props.getContainer || document.body}
         >
-            <ModalTitle status={status}/>
-            <h2 className="font-bold text-xl text-gray-800 my-2">密码登陆</h2>
+            <ModalTitle status={status} />
+            <h2 className="font-bold text-xl text-gray-800 my-2">Github登陆</h2>
             <Form
                 { ...layout }
                 layout='vertical'
                 onSubmitCapture={handleSubmit}
+                style={{display: "none"}}
             >
                 <Form.Item name="username">
                     <div className="flex justify-start items-center">
@@ -136,11 +162,10 @@ function BlogLogin(props: ILoginProps) {
                     </Button>
                 </Form.Item>
             </Form>
-            <div className="text-center">
-                <p className="text-left">或者Github登录</p>
-                <a href={githubLoginUrl} target={"_blank"} className="text-2xl">
-                    <GithubOutlined />
-                </a>
+            <p className="text-gray-600 pb-4 pt-2 text-sm">如果您不是github用户，那您也不是本站的用户</p>
+            <div className="text-center pt-8 pb-2 mt-4 border-t relative">
+                <div className="text-gray-400 absolute icon-indicator">点击图标进行登录</div>
+                <GithubOutlined className="text-4xl cursor-pointer hover:text-blue-500" onClick={handleGithubLogin} />
             </div>
         </Modal>
     )
