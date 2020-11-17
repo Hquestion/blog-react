@@ -85,10 +85,10 @@ function LoginProvider(props: any) {
     const value = useMemo(() => [state, dispatch], [state]);
     const [isLoading, setIsLoading] = useState(true);
     const { children, ...otherProps } = props;
-    const getAndCacheUserInfo = () => {
+    const getAndCacheUserInfo = (token?: string) => {
         setIsLoading(true);
         let promise;
-        if (!state.token) {
+        if (!token) {
             promise = Promise.reject();
         } else {
             promise = sendGet('/userInfo').promise;
@@ -110,24 +110,24 @@ function LoginProvider(props: any) {
         }).finally(() => {
             setTimeout(() => {
                 setIsLoading(false);
-            }, 1000);
+            }, 500);
         });
     }
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
+        const token: string = localStorage.getItem('authToken') || '';
         dispatch({
             type: LoginActionTypes.SET_TOKEN,
             data: { token }
         });
-        getAndCacheUserInfo();
+        getAndCacheUserInfo(token);
     }, []);
 
     const setVisibleFn = (isVisible: boolean) => dispatch({
         type: isVisible ? LoginActionTypes.SHOW_LOGIN : LoginActionTypes.HIDE_LOGIN
     });
 
-    const handleSubmit = () => {
-        getAndCacheUserInfo();
+    const handleSubmit = (token: string) => {
+        getAndCacheUserInfo(token);
     };
 
     return (
