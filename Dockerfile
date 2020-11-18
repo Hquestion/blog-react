@@ -21,5 +21,5 @@ COPY --from=build-stage /home/app/build/ /usr/share/nginx/html
 COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
 
 # TODO 配置代理
-COPY --from=build-stage ./nginx-proxy.conf /etc/nginx/extra-conf.d/nginx-proxy.conf
+COPY --from=build-stage /home/app/nginx-proxy.conf /etc/nginx/extra-conf.d/nginx-proxy.conf
 
