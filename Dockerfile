@@ -20,6 +20,5 @@ COPY --from=build-stage /home/app/build/ /usr/share/nginx/html
 # Copy the default nginx.conf provided by tiangolo/node-frontend
 COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
 
-# TODO 配置代理
-COPY --from=build-stage /home/app/nginx-proxy.conf /etc/nginx/extra-conf.d/nginx-proxy.conf
+COPY ./nginx-proxy.conf /etc/nginx/extra-conf.d/nginx-proxy.conf
 
