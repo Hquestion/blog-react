@@ -3,6 +3,8 @@ FROM tiangolo/node-frontend:10 as build-stage
 
 RUN mkdir -p /home/app
 
+RUN mkdir -p /ssl
+
 WORKDIR /home/app
 
 COPY package*.json /home/app
@@ -17,8 +19,14 @@ RUN npm run build
 FROM nginx:1.15
 
 COPY --from=build-stage /home/app/build/ /usr/share/nginx/html
-# Copy the default nginx.conf provided by tiangolo/node-frontend
-COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY ./nginx-proxy.conf /etc/nginx/extra-conf.d/nginx-proxy.conf
+# 拷贝ssl证书到/ssl目录
+COPY build-docker/server.key /ssl
+
+COPY build-docker/server.pem /ssl
+
+# Copy the default nginx.conf provided by tiangolo/node-frontend
+COPY build-docker/nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY build-docker/nginx-proxy.conf /etc/nginx/extra-conf.d/nginx-proxy.conf
 
