@@ -15,14 +15,9 @@ interface IProps {
     upload: (blob: Blob) => Promise<string>;
 }
 
-interface ClipboardItem {
-    types: Array<string>,
-    getType: Function
-}
-
 interface Clipboard2 extends Clipboard{
     writeText(newClipText: string): Promise<void>;
-    read: () => Promise<ClipboardItem[]>;
+    read: () => Promise<ClipboardItems>;
 }
 
 interface NavigatorClipboard {
@@ -159,7 +154,7 @@ function usePaste(code: string, editor: codemirror.Editor | null, upload: (blob:
     useEffect(() => {
         function pasteHandler() {
             (window.navigator as unknown as Navigator2).clipboard.read().then(data => {
-                data.forEach((item: ClipboardItem) => {
+                data.forEach((item) => {
                     item.types.forEach( (type: string) => {
                         if (/^image\/.*/.test(type)) {
                             item.getType(type).then((blob: Blob) => {
